@@ -1,0 +1,12 @@
+.logo {
+  background-color: #e2c89c;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title-img {
+  max-width: 300px;
+  margin: 0 auto;
+}

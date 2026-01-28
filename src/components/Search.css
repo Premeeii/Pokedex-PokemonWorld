@@ -1,0 +1,21 @@
+.search {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto 20px;
+  padding: 10px 14px;
+  font-size: 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+@media (max-width: 425px) {
+    .search {
+        max-width: 290px;
+    }
+}
+
+@media (max-width: 375px) {
+    .search {
+        max-width: 240px;
+    }
+}

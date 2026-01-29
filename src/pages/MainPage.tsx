@@ -65,7 +65,7 @@ const MainPage = () => {
         <div className="pokemon-grid">
           {loading
             ? pokemonIds.map((_, index) => (
-                <div key={index} className="pokemon-placeholder" />
+                <div key={index}/>
               ))
             : pokemonIds.map((id) => (
                 <Card

@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { Modal } from "react-bootstrap";
+//import Button from 'react-bootstrap/Button';
+
 import "./Card.css";
 import Bug from "../assets/Bug.png";
 import Dark from "../assets/Dark.png";
@@ -33,6 +36,13 @@ interface Types {
   };
 }
 
+interface Abilities {
+  slot: number;
+  ability: {
+    name: string;
+  };
+}
+
 interface Pokemon {
   id: number;
   name: string;
@@ -43,9 +53,11 @@ interface Pokemon {
     front_default: string;
   };
   types: Types[];
+  abilities: Abilities[];
 }
 
-const typeIcon: Record<string, string> = { //กำหนดtypeว่าkeyเป็นstring valueก็เป็นstring(ดึงจากimportมีpathมา)
+const typeIcon: Record<string, string> = {
+  //กำหนดtypeว่าkeyเป็นstring valueก็เป็นstring(ดึงจากimportมีpathมา)
   bug: Bug,
   dark: Dark,
   dragon: Dragon,
@@ -64,11 +76,35 @@ const typeIcon: Record<string, string> = { //กำหนดtypeว่าkeyเ�
   rock: Rock,
   steel: Steel,
   water: Water,
-}
+};
+
+const typeBgMap: Record<string, string> = {
+  grass: "bg-grass",
+  fire: "bg-fire",
+  water: "bg-water",
+  electric: "bg-electric",
+  poison: "bg-poison",
+  bug: "bg-bug",
+  normal: "bg-normal",
+  psychic: "bg-psychic",
+  rock: "bg-rock",
+  ground: "bg-ground",
+  ice: "bg-ice",
+  ghost: "bg-ghost",
+  dragon: "bg-dragon",
+  steel: "bg-steel",
+  fairy: "bg-fairy",
+  dark: "bg-dark2",
+  flying: "bg-flying",
+  fighting: "bg-fighting",
+};
 
 const Card = ({ id, search, typeSearch }: CardProps) => {
   const [pokemonData, setPokemonData] = useState<Pokemon | null>(null);
   const [loading, setLoading] = useState(true);
+  const [show, setShow] = useState(false);
+
+  const showModal = () => setShow(!show);
 
   useEffect(() => {
     const getPokemon = async () => {
@@ -92,6 +128,9 @@ const Card = ({ id, search, typeSearch }: CardProps) => {
     return <div className="pokemon-placeholder">Loading...</div>;
   }
 
+  const primaryType = pokemonData.types?.[0]?.type?.name ?? "default";
+  const bgType = typeBgMap[primaryType];
+
   if (
     search &&
     !pokemonData.name.toLowerCase().includes(search.toLowerCase()) //searchชื่อให้ตรงกับชื่อpokemon
@@ -99,27 +138,53 @@ const Card = ({ id, search, typeSearch }: CardProps) => {
     return null;
   }
 
-  if(
-    typeSearch === "All" || pokemonData.types.some(t => t.type.name === typeSearch.toLowerCase()) //แสดงทั้งหมดกับเลือกpokemonที่มีtypeตรงกับที่search someไว้ใช้ว่ามี1ในtypeตรงมั้ย
+  if (
+    typeSearch === "All" ||
+    pokemonData.types.some((t) => t.type.name === typeSearch.toLowerCase()) //แสดงทั้งหมดกับเลือกpokemonที่มีtypeตรงกับที่search someไว้ใช้ว่ามี1ในtypeตรงมั้ย
   )
+    return (
+      <div className={`pokemon-placeholder ${bgType}`} onClick={showModal}>
+        <p>#{pokemonData.id}</p>
+        <p>{pokemonData.name[0].toUpperCase() + pokemonData.name.slice(1)}</p>
+        <img src={pokemonData.sprites.front_default} alt={pokemonData.name} />
 
-  return (
-    <div className="pokemon-placeholder">
-      <p>#{pokemonData.id}</p>
-      <p>{pokemonData.name[0].toUpperCase() + pokemonData.name.slice(1)}</p>
-      <img src={pokemonData.sprites.front_default} alt={pokemonData.name}/>
+        <div className="type-icon">
+          {pokemonData.types.map((t) => (
+            <img
+              key={t.slot}
+              src={typeIcon[t.type.name]}
+              alt="type pokemon"
+            ></img>
+          ))}
+        </div>
 
-      <div className="type-icon">
-        {pokemonData.types.map((t) => (
-          <img
-            key={t.slot}
-            src={typeIcon[t.type.name]}
-            alt="type pokemon"
-          ></img>
-        ))}
+        <Modal
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+          show={show}
+          className={`pokemon-modal ${bgType}`}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title className="modal-title-center">
+              {pokemonData.name[0].toUpperCase() + pokemonData.name.slice(1)}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="modal-body">
+            <img
+              src={pokemonData.sprites.front_default}
+              alt={pokemonData.name}
+            />
+            <div className="ability">
+              <p style={{ fontWeight: "bold" }}>Ability:</p>
+              {pokemonData.abilities.map((a) => (
+                <p key={a.slot}>{a.ability.name}</p>
+              ))}
+            </div>
+          </Modal.Body>
+        </Modal>
       </div>
-    </div>
-  );
+    );
 };
 
 export default Card;

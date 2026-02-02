@@ -28,6 +28,8 @@
   max-width: 40px;
   margin-bottom: 20px;
   flex-shrink: 0;
+  
+  
 }
 
 .filter-bar {
@@ -37,6 +39,12 @@
   margin-bottom: 16px;
   flex-wrap: wrap;
   
+}
+
+.filter-item{
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .search-wrapper {
@@ -55,4 +63,23 @@
 .filter-bar label {
   font-size: 18px;
   font-family: "Josefin Sans", sans-serif;
+}
+
+@media (max-width: 450px) {
+  .pokeball-logo{
+  position: relative;
+  width: 0%;
+  }
+
+  .filter-bar{
+    gap: 0px;
+  }
+
+ @media (max-width: 320px) {
+  .pokemon-grid{
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+  
+ }
+  
 }

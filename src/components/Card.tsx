@@ -22,6 +22,8 @@ import Rock from "../assets/Rock.png";
 import Steel from "../assets/Steel.png";
 import Water from "../assets/Water.png";
 
+
+//ส่งpropsไปที่ส่วนMainpage
 interface CardProps {
   id: number;
   search: string;
@@ -143,6 +145,7 @@ const Card = ({ id, search, typeSearch }: CardProps) => {
   const bgType = typeBgMap[primaryType];
 
 
+  //รับค่าsearch มาจากMainpageแล้วมาค้นหา
   if (
     search &&
     !pokemonData.name.toLowerCase().includes(search.toLowerCase()) //searchชื่อให้ตรงกับชื่อpokemon

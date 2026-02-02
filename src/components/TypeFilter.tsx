@@ -1,5 +1,6 @@
 import "./TypeFilter.css";
 
+//ส่งpropsไปที่ส่วนMainpage
 interface TypeProps {
   typeSearch: string;
   setTypeSearch: (value: string) => void;

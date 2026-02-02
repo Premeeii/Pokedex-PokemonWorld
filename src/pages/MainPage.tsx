@@ -46,19 +46,29 @@ const MainPage = () => {
             alt="Pokeball Logo"
           ></img>
 
+          {/*ส่งsearchที่ได้มาจาก components serch ไปที่component card เพื่อหาตามที่กรอก*/}
           <div className="search-wrapper">
-            <Search search={search} setSearch={setSearch} />
+            <Search search={search} setSearch={setSearch} />   
             
           </div>
 
           <div className="filter">
-            <label>Type:</label>
-            <TypeFilter typeSearch={typeSearch} setTypeSearch={setTypeSearch} />
-            <label>Generation:</label>
-            <GenFilter
-              genSearch={genSearch}
-              setGenSearch={setGenSearch}
-            ></GenFilter>
+
+            <div className="filter-item">
+              <label>Type:</label>
+               <TypeFilter typeSearch={typeSearch} setTypeSearch={setTypeSearch} />
+            </div>
+
+            <div className="filter-item">
+              <label>Generation:</label>
+                <GenFilter
+                  genSearch={genSearch}
+                  setGenSearch={setGenSearch}
+                ></GenFilter>
+            </div>
+    
+            
+
           </div>
         </div>
 

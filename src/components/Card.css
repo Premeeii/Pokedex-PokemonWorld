@@ -8,6 +8,7 @@
   transition: 
     box-shadow 0.3s ease,
     transform 0.3s ease;
+  cursor: pointer;
 }
 
 .pokemon-placeholder:hover {
@@ -105,6 +106,7 @@
   background-color: #c2433c;
 }
 
+
 /* Modal Content */
 .pokemon-modal .modal-content{
   background-color: #e0e0e0;
@@ -120,6 +122,7 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  font-family: "Josefin Sans", sans-serif;
 }
 
 .line {
@@ -179,14 +182,6 @@
   font-family: "Josefin Sans", sans-serif;
   text-align: start;
 }
-
-.modal-body span {
-  font-weight: bold;
-  font-size: 20px;
-  font-family: "Josefin Sans", sans-serif;
-  text-align: start;
-}
-
 
 
 /* Modal Color Type */

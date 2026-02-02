@@ -1,5 +1,6 @@
 import "./Search.css"
 
+//ส่งpropsไปที่ส่วนMainpage
 interface SearchProps {
   search: string
   setSearch: (value: string) => void

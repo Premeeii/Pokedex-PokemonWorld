@@ -36,11 +36,19 @@ interface Types {
   };
 }
 
+interface Stats {
+  base_stat: string;
+  stat: {
+    name: string;
+  };
+}
+
 interface Abilities {
   slot: number;
   ability: {
     name: string;
   };
+  is_hidden: string;
 }
 
 interface Pokemon {
@@ -49,11 +57,14 @@ interface Pokemon {
   generation: {
     name: string;
   };
+  stats: Stats[];
   sprites: {
     front_default: string;
   };
   types: Types[];
   abilities: Abilities[];
+  height: string;
+  weight: string;
 }
 
 const typeIcon: Record<string, string> = {
@@ -131,6 +142,7 @@ const Card = ({ id, search, typeSearch }: CardProps) => {
   const primaryType = pokemonData.types?.[0]?.type?.name ?? "default";
   const bgType = typeBgMap[primaryType];
 
+
   if (
     search &&
     !pokemonData.name.toLowerCase().includes(search.toLowerCase()) //searchชื่อให้ตรงกับชื่อpokemon
@@ -160,6 +172,7 @@ const Card = ({ id, search, typeSearch }: CardProps) => {
 
         <Modal
           size="lg"
+          fullscreen="sm-down"
           aria-labelledby="contained-modal-title-vcenter"
           centered
           show={show}
@@ -175,11 +188,40 @@ const Card = ({ id, search, typeSearch }: CardProps) => {
               src={pokemonData.sprites.front_default}
               alt={pokemonData.name}
             />
-            <div className="ability">
-              <p style={{ fontWeight: "bold" }}>Ability:</p>
-              {pokemonData.abilities.map((a) => (
-                <p key={a.slot}>{a.ability.name}</p>
-              ))}
+   
+            <div className="line"></div>
+
+            <div className="modal-detail-body">
+
+              <div className="left-side">   
+                <div className="pokemon-details">
+                  <p>Ability: </p>
+                  <p>
+                    {pokemonData.abilities
+                      .map((a) => a.ability.name)
+                      .join(", ")}
+                  </p>
+                </div>
+
+                <div className="pokemon-details">
+                  <p>Height:</p>
+                  <p>{pokemonData.height}</p>
+                </div>
+
+                <div className="pokemon-details">
+                  <p>Weight:</p>
+                  <p>{pokemonData.weight}</p>
+                </div>
+              </div>
+
+              <div className="right-side">
+                <p>Base Stats</p>
+                {pokemonData.stats.map((s) => (
+                  <p key={s.stat.name}>
+                    {s.stat.name}: {s.base_stat}
+                  </p>
+                ))}
+              </div>
             </div>
           </Modal.Body>
         </Modal>

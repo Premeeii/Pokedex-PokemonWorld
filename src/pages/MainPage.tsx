@@ -12,7 +12,7 @@ const MainPage = () => {
   const [typeSearch, setTypeSearch] = useState("All");
   const [genSearch, setGenSearch] = useState<number>(0);
 
-  const genLength: Record<number, { start: number; end: number }> = {
+  const genLength: Record<number, { start: number; end: number }> = { //map generation
     0: { start: 1, end: 1025 },
     1: { start: 1, end: 151 },
     2: { start: 152, end: 251 },
@@ -48,12 +48,12 @@ const MainPage = () => {
 
           <div className="search-wrapper">
             <Search search={search} setSearch={setSearch} />
+            
           </div>
 
           <div className="filter">
             <label>Type:</label>
             <TypeFilter typeSearch={typeSearch} setTypeSearch={setTypeSearch} />
-
             <label>Generation:</label>
             <GenFilter
               genSearch={genSearch}

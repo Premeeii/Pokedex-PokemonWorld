@@ -12,29 +12,38 @@ const MainPage = () => {
   const [typeSearch, setTypeSearch] = useState("All");
   const [genSearch, setGenSearch] = useState<number>(0);
 
-  const genLength: Record<number, { start: number; end: number }> = { //map generation
-    0: { start: 1, end: 1025 },
-    1: { start: 1, end: 151 },
-    2: { start: 152, end: 251 },
-    3: { start: 252, end: 386 },
-    4: { start: 387, end: 493 },
-    5: { start: 494, end: 649 },
-    6: { start: 650, end: 721 },
-    7: { start: 722, end: 809 },
-    8: { start: 810, end: 905 },
-    9: { start: 906, end: 1025 },
+  const genLength: Record<number, { start: number; end: number }[]> = {
+    //map generation
+    0: [
+      { start: 1, end: 1025 },
+      { start: 10001, end: 10325 },
+    ],
+    1: [{ start: 1, end: 151 }],
+    2: [{ start: 152, end: 251 }],
+    3: [{ start: 252, end: 386 }],
+    4: [{ start: 387, end: 493 }],
+    5: [{ start: 494, end: 649 }],
+    6: [{ start: 650, end: 721 }],
+    7: [{ start: 722, end: 809 }],
+    8: [{ start: 810, end: 905 }],
+    9: [{ start: 906, end: 1025 }],
+    10: [{start:10001, end:10325}],
   };
 
-  const { start, end } = genLength[genSearch];
+  const resetFilter=()=>{
+  setGenSearch(0);
+  setTypeSearch("All");
+  setSearch("");
+  }
 
-  const pokemonIds = Array.from(
-    { length: end - start + 1 }, (_, i) => start + i,
+  const ranges = genLength[genSearch];
+
+  const pokemonIds = ranges.flatMap(({ start, end }) =>
+    Array.from({ length: end - start + 1 }, (_, i) => start + i),
   );
 
   // สมมติโหลดเสร็จหลัง 1 วิ (เอาไว้ทดสอบ)
   setTimeout(() => setLoading(false), 1000);
-
-  
 
   return (
     <div className="page">
@@ -44,40 +53,38 @@ const MainPage = () => {
             src={Pokeball}
             className="pokeball-logo"
             alt="Pokeball Logo"
+            onClick={() => resetFilter()}
           ></img>
 
-          {/*ส่งsearchที่ได้มาจาก components serch ไปที่component card เพื่อหาตามที่กรอก*/}
+          {/*setSearchที่รับมาจากการSearchผ่านComponent Search*/}
           <div className="search-wrapper">
-            <Search search={search} setSearch={setSearch} />   
-            
+            <Search search={search} setSearch={setSearch} />
           </div>
 
           <div className="filter">
-
             <div className="filter-item">
               <label>Type:</label>
-               <TypeFilter typeSearch={typeSearch} setTypeSearch={setTypeSearch} />
+              <TypeFilter
+                typeSearch={typeSearch}
+                setTypeSearch={setTypeSearch}
+              />
             </div>
 
             <div className="filter-item">
               <label>Generation:</label>
-                <GenFilter
-                  genSearch={genSearch}
-                  setGenSearch={setGenSearch}
-                ></GenFilter>
+              <GenFilter
+                genSearch={genSearch}
+                setGenSearch={setGenSearch}
+              ></GenFilter>
             </div>
-    
-            
-
           </div>
         </div>
 
         <div className="pokemon-grid">
           {loading
-            ? pokemonIds.map((_, index) => (
-                <div key={index}/>
-              ))
-            : pokemonIds.map((id) => (
+            ? pokemonIds.map((_, index) => <div key={index} />)
+            : //mapข้อมูลตามidที่กำหนดข้างบนแล้วก็ส่งข้อมูลที่กรอกมาจากcomponet filterต่างๆไปที่Card
+              pokemonIds.map((id) => (
                 <Card
                   key={id}
                   id={id}

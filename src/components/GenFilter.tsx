@@ -23,6 +23,7 @@ const GenFilter = ({ genSearch, setGenSearch }: GenFilterProps) => {
         <option>7</option>
         <option>8</option>
         <option>9</option>
+        <option value={10}>Other</option>
       </select>
     </div>
   );

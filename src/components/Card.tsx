@@ -141,6 +141,7 @@ const Card = ({ id, search, typeSearch }: CardProps) => {
     return <div className="pokemon-placeholder">Loading...</div>;
   }
 
+  //เครื่อง.?เอาไว้ใช้เช็คค่าว่ามีมั้ย เอาไว้กันerrorในกรณีที่ไม่มีค่า
   const primaryType = pokemonData.types?.[0]?.type?.name ?? "default";
   const bgType = typeBgMap[primaryType];
 
@@ -162,7 +163,8 @@ const Card = ({ id, search, typeSearch }: CardProps) => {
         <p>#{pokemonData.id}</p>
         <p>{pokemonData.name[0].toUpperCase() + pokemonData.name.slice(1)}</p>
         <img src={pokemonData.sprites.front_default} alt={pokemonData.name} />
-
+         
+         {/* ใช้slotเป็นkey จะได้เช็คtypeง่ายๆ เพราะในjsonมีslotแค่1และ2เท่านั้น*/}
         <div className="type-icon">
           {pokemonData.types.map((t) => (
             <img
